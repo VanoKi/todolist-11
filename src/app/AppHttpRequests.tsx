@@ -1,7 +1,7 @@
 import {type ChangeEvent, type CSSProperties, useEffect, useState} from 'react'
 import Checkbox from '@mui/material/Checkbox'
 import axios from 'axios'
-import {BaseResponce} from "@/common/types/types.ts";
+import {BaseResponce} from "@/common/types";
 import {CreateItemForm, EditableSpan} from "@/common/components";
 
 const token = '448e0d12-136a-4f40-9ff3-99347c703a57'
