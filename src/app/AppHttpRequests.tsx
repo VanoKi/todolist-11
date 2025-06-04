@@ -21,7 +21,7 @@ export const AppHttpRequests = () => {
     axios.post<CreateTodolistResponse>('https://social-network.samuraijs.com/api/1.1/todo-lists',{title}, {headers: {Authorization: `Bearer ${token}`, "API-KEY": apiKey}})
       .then((res) => {
         const todolist = res.data.data.item
-        setTodolists([...todolist])
+        setTodolists([todolist, ...todolists])
       })
   }
 
