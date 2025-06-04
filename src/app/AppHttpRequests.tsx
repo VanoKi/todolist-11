@@ -12,7 +12,7 @@ export const AppHttpRequests = () => {
 
   useEffect(() => {
     // get todolists
-    axios.get('https://social-network.samuraijs.com/api/1.1/todo-lists').then((res) => console.log(res))
+    axios.get('https://social-network.samuraijs.com/api/1.1/todo-lists', {headers: {Authorization: `Bearer ${token}`}}).then((res) => console.log(res))
   }, [])
 
   const createTodolist = (title: string) => {}
