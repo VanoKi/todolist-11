@@ -3,6 +3,7 @@ import Checkbox from '@mui/material/Checkbox'
 import {CreateItemForm} from '@/common/components/CreateItemForm/CreateItemForm'
 import {EditableSpan} from '@/common/components/EditableSpan/EditableSpan'
 import axios from 'axios'
+import {BaseResponce} from "@/common/types/types.ts";
 
 const token = '448e0d12-136a-4f40-9ff3-99347c703a57'
 const apiKey = '14d62fb0-7776-4500-94b8-5e06e7d229ae'
@@ -98,16 +99,4 @@ export type Todolist = {
   title: string
   addedDate: string
   order: number
-}
-
-export type FieldError = {
-  error: string
-  field: string
-}
-
-export type BaseResponce<T = {}> = {
-  data: T
-  resultCode: number
-  messages: string[]
-  fieldsErrors: FieldError[]
 }
