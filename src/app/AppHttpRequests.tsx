@@ -3,9 +3,9 @@ import Checkbox from '@mui/material/Checkbox'
 import axios from 'axios'
 import {BaseResponce} from "@/common/types";
 import {CreateItemForm, EditableSpan} from "@/common/components";
+import {instance} from "@/common/instance/instance.ts";
 
-const token = '448e0d12-136a-4f40-9ff3-99347c703a57'
-const apiKey = '14d62fb0-7776-4500-94b8-5e06e7d229ae'
+
 
 export const AppHttpRequests = () => {
   const [todolists, setTodolists] = useState<Todolist[]>([])
@@ -13,12 +13,12 @@ export const AppHttpRequests = () => {
 
   useEffect(() => {
     // get todolists
-    axios.get<Todolist[]>('https://social-network.samuraijs.com/api/1.1/todo-lists', {headers: {Authorization: `Bearer ${token}`}})
+    instance.get<Todolist[]>('/todo-lists')
       .then((res) => setTodolists(res.data))
   }, [])
 
   const createTodolist = (title: string) => {
-    axios.post<BaseResponce<{item: Todolist}>>('https://social-network.samuraijs.com/api/1.1/todo-lists',{title}, {headers: {Authorization: `Bearer ${token}`, "API-KEY": apiKey}})
+    instance.post<BaseResponce<{item: Todolist}>>('/todo-lists',{title})
       .then((res) => {
         const todolist = res.data.data.item
         setTodolists([todolist, ...todolists])
@@ -26,23 +26,13 @@ export const AppHttpRequests = () => {
   }
 
   const deleteTodolist = (id: string) => {
-    axios.delete<BaseResponce>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'API-KEY': apiKey,
-      }
-    }).then(() => {
+    instance.delete<BaseResponce>(`/todo-lists/${id}`).then(() => {
       setTodolists(todolists.filter(tl => tl.id !== id))
     })
   }
 
   const changeTodolistTitle = (id: string, title: string) => {
-    axios.put<BaseResponce>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {title}, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'API-KEY': apiKey,
-      }
-    }).then(() => setTodolists(todolists.map(tl => tl.id === id ? {...tl, title} : tl)))
+    instance.put<BaseResponce>(`/todo-lists/${id}`, {title}).then(() => setTodolists(todolists.map(tl => tl.id === id ? {...tl, title} : tl)))
   }
 
   const createTask = (todolistId: string, title: string) => {
