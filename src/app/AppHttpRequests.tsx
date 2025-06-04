@@ -20,7 +20,7 @@ export const AppHttpRequests = () => {
   }, [])
 
   const createTodolist = (title: string) => {
-    instance.post<BaseResponce<{item: Todolist}>>('/todo-lists',{title})
+    todolistsApi.createTodolist(title)
       .then((res) => {
         const todolist = res.data.data.item
         setTodolists([todolist, ...todolists])
@@ -28,7 +28,7 @@ export const AppHttpRequests = () => {
   }
 
   const deleteTodolist = (id: string) => {
-    instance.delete<BaseResponce>(`/todo-lists/${id}`).then(() => {
+    todolistsApi.deleteTodolist(id).then(() => {
       setTodolists(todolists.filter(tl => tl.id !== id))
     })
   }
