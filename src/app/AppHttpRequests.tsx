@@ -4,6 +4,7 @@ import axios from 'axios'
 import {BaseResponce} from "@/common/types";
 import {CreateItemForm, EditableSpan} from "@/common/components";
 import {instance} from "@/common/instance/instance.ts";
+import {Todolist} from "@/features/todolists/api/todolistsApi.types.ts";
 
 
 
@@ -83,9 +84,3 @@ const container: CSSProperties = {
   flexDirection: 'column',
 }
 
-export type Todolist = {
-  id: string
-  title: string
-  addedDate: string
-  order: number
-}
