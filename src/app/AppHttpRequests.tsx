@@ -34,7 +34,7 @@ export const AppHttpRequests = () => {
   }
 
   const changeTodolistTitle = (id: string, title: string) => {
-    todolistsApi.changeTodolistTitle(id, title).then(() => setTodolists(todolists.map(tl => tl.id === id ? {...tl, title} : tl)))
+    todolistsApi.changeTodolistTitle({id, title}).then(() => setTodolists(todolists.map(tl => tl.id === id ? {...tl, title} : tl)))
   }
 
   const createTask = (todolistId: string, title: string) => {
