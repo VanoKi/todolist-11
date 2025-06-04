@@ -5,6 +5,7 @@ import {EditableSpan} from '@/common/components/EditableSpan/EditableSpan'
 import axios from 'axios'
 
 const token = '448e0d12-136a-4f40-9ff3-99347c703a57'
+const apiKey = '14d62fb0-7776-4500-94b8-5e06e7d229ae'
 
 export const AppHttpRequests = () => {
   const [todolists, setTodolists] = useState<Todolist[]>([])
@@ -12,46 +13,59 @@ export const AppHttpRequests = () => {
 
   useEffect(() => {
     // get todolists
-    axios.get('https://social-network.samuraijs.com/api/1.1/todo-lists', {headers: {Authorization: `Bearer ${token}`}}).then((res) => console.log(res.data))
+    axios.get<Todolist[]>('https://social-network.samuraijs.com/api/1.1/todo-lists', {headers: {Authorization: `Bearer ${token}`}})
+      .then((res) => setTodolists(res.data))
   }, [])
 
-  const createTodolist = (title: string) => {}
+  const createTodolist = (title: string) => {
+    axios.post<CreateTodolistResponse>('https://social-network.samuraijs.com/api/1.1/todo-lists',{title}, {headers: {Authorization: `Bearer ${token}`, "API-KEY": apiKey}})
+      .then((res) => {
+        const todolist = res.data.data.item
+        setTodolists([...todolist])
+      })
+  }
 
-  const deleteTodolist = (id: string) => {}
+  const deleteTodolist = (id: string) => {
+  }
 
-  const changeTodolistTitle = (id: string, title: string) => {}
+  const changeTodolistTitle = (id: string, title: string) => {
+  }
 
-  const createTask = (todolistId: string, title: string) => {}
+  const createTask = (todolistId: string, title: string) => {
+  }
 
-  const deleteTask = (todolistId: string, taskId: string) => {}
+  const deleteTask = (todolistId: string, taskId: string) => {
+  }
 
-  const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>, task: any) => {}
+  const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>, task: any) => {
+  }
 
-  const changeTaskTitle = (task: any, title: string) => {}
+  const changeTaskTitle = (task: any, title: string) => {
+  }
 
   return (
-      <div style={{margin: '20px'}}>
-        <CreateItemForm onCreateItem={createTodolist}/>
-        {todolists.map((todolist: any) => (
-            <div key={todolist.id} style={container}>
-              <div>
-                <EditableSpan value={todolist.title}
-                              onChange={title => changeTodolistTitle(todolist.id, title)}/>
-                <button onClick={() => deleteTodolist(todolist.id)}>x</button>
-              </div>
-              <CreateItemForm onCreateItem={title => createTask(todolist.id, title)}/>
-              {tasks[todolist.id]?.map((task: any) => (
-                  <div key={task.id}>
-                    <Checkbox checked={task.isDone}
-                              onChange={e => changeTaskStatus(e, task)}/>
-                    <EditableSpan value={task.title}
-                                  onChange={title => changeTaskTitle(task, title)}/>
-                    <button onClick={() => deleteTask(todolist.id, task.id)}>x</button>
-                  </div>
-              ))}
+    <div style={{margin: '20px'}}>
+      <CreateItemForm onCreateItem={createTodolist}/>
+      {todolists.map((todolist:Todolist) => (
+        <div key={todolist.id} style={container}>
+          <div>
+            <EditableSpan value={todolist.title}
+                          onChange={title => changeTodolistTitle(todolist.id, title)}/>
+            <button onClick={() => deleteTodolist(todolist.id)}>x</button>
+          </div>
+          <CreateItemForm onCreateItem={title => createTask(todolist.id, title)}/>
+          {tasks[todolist.id]?.map((task: any) => (
+            <div key={task.id}>
+              <Checkbox checked={task.isDone}
+                        onChange={e => changeTaskStatus(e, task)}/>
+              <EditableSpan value={task.title}
+                            onChange={title => changeTaskTitle(task, title)}/>
+              <button onClick={() => deleteTask(todolist.id, task.id)}>x</button>
             </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ))}
+    </div>
   )
 }
 
@@ -70,4 +84,15 @@ export type Todolist = {
   title: string
   addedDate: string
   order: number
+}
+
+export type FieldError = {
+  error: string
+  field: string
+}
+type CreateTodolistResponse = {
+  data: { item: Todolist }
+  resultCode: number
+  messages: string[]
+  fieldsErrors: FieldError[]
 }
