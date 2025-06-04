@@ -31,8 +31,8 @@ export const AppHttpRequests = () => {
         Authorization: `Bearer ${token}`,
         'API-KEY': apiKey,
       }
-    }).then((res) => {
-      console.log(res.data)
+    }).then(() => {
+      setTodolists(todolists.filter(tl => tl.id !== id))
     })
   }
 
