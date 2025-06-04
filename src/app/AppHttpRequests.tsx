@@ -5,6 +5,7 @@ import {BaseResponce} from "@/common/types";
 import {CreateItemForm, EditableSpan} from "@/common/components";
 import {instance} from "@/common/instance/instance.ts";
 import {Todolist} from "@/features/todolists/api/todolistsApi.types.ts";
+import {todolistsApi} from "@/features/todolists/api/todolistsApi.ts";
 
 
 
@@ -14,7 +15,7 @@ export const AppHttpRequests = () => {
 
   useEffect(() => {
     // get todolists
-    instance.get<Todolist[]>('/todo-lists')
+    todolistsApi.getTodolists()
       .then((res) => setTodolists(res.data))
   }, [])
 
@@ -33,7 +34,7 @@ export const AppHttpRequests = () => {
   }
 
   const changeTodolistTitle = (id: string, title: string) => {
-    instance.put<BaseResponce>(`/todo-lists/${id}`, {title}).then(() => setTodolists(todolists.map(tl => tl.id === id ? {...tl, title} : tl)))
+    todolistsApi.changeTodolistTitle(id, title).then(() => setTodolists(todolists.map(tl => tl.id === id ? {...tl, title} : tl)))
   }
 
   const createTask = (todolistId: string, title: string) => {
