@@ -1,12 +1,8 @@
 import {type ChangeEvent, type CSSProperties, useEffect, useState} from 'react'
 import Checkbox from '@mui/material/Checkbox'
-import axios from 'axios'
-import {BaseResponce} from "@/common/types";
 import {CreateItemForm, EditableSpan} from "@/common/components";
-import {instance} from "@/common/instance/instance.ts";
 import {Todolist} from "@/features/todolists/api/todolistsApi.types.ts";
 import {todolistsApi} from "@/features/todolists/api/todolistsApi.ts";
-
 
 
 export const AppHttpRequests = () => {
