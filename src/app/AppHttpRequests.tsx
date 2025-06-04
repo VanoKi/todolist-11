@@ -7,12 +7,12 @@ import axios from 'axios'
 const token = '448e0d12-136a-4f40-9ff3-99347c703a57'
 
 export const AppHttpRequests = () => {
-  const [todolists, setTodolists] = useState<any>([])
+  const [todolists, setTodolists] = useState<Todolist[]>([])
   const [tasks, setTasks] = useState<any>({})
 
   useEffect(() => {
     // get todolists
-    axios.get('https://social-network.samuraijs.com/api/1.1/todo-lists', {headers: {Authorization: `Bearer ${token}`}}).then((res) => console.log(res))
+    axios.get('https://social-network.samuraijs.com/api/1.1/todo-lists', {headers: {Authorization: `Bearer ${token}`}}).then((res) => console.log(res.data))
   }, [])
 
   const createTodolist = (title: string) => {}
@@ -63,4 +63,11 @@ const container: CSSProperties = {
   display: 'flex',
   justifyContent: 'space-between',
   flexDirection: 'column',
+}
+
+export type Todolist = {
+  id: string
+  title: string
+  addedDate: string
+  order: number
 }
