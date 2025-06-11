@@ -60,7 +60,11 @@ export const AppHttpRequests = () => {
     )
   }
 
-  const createTask = (todolistId: string, title: string) => {}
+  const createTask = (todolistId: string, title: string) => {
+    tasksApi.createTask({ title, todolistId }).then((res) => {
+      console.log(res)
+    })
+  }
 
   const deleteTask = (todolistId: string, taskId: string) => {}
 
