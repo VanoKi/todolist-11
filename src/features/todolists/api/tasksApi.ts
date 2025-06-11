@@ -2,6 +2,7 @@ import { instance } from "@/common/instance/instance.ts"
 import {
   DomainTask,
   GetTasksResponse,
+  UpdateTaskModel,
 } from "@/features/todolists/api/tasksApi.types.ts"
 import { BaseResponce } from "@/common/types"
 
@@ -23,6 +24,20 @@ export const tasksApi = {
       {
         title,
       },
+    )
+  },
+  changeTaskStatus({
+    todolistId,
+    taskId,
+    model,
+  }: {
+    todolistId: string
+    taskId: string
+    model: UpdateTaskModel
+  }) {
+    return instance.put<BaseResponce<{ item: DomainTask }>>(
+      `/todo-lists/${todolistId}/tasks${taskId}`,
+      model,
     )
   },
 }
