@@ -78,8 +78,10 @@ export const AppHttpRequests = () => {
 
   const changeTaskStatus = (
     e: ChangeEvent<HTMLInputElement>,
-    task: any,
+    task: DomainTask,
   ) => {
+    const todolistId = task.todoListId
+
     const model: UpdateTaskModel = {
       title: task.title,
       priority: task.priority,
@@ -88,18 +90,13 @@ export const AppHttpRequests = () => {
       deadline: task.deadline,
       status: e.target.checked ? 2 : 0,
     }
-    const tosolistId = task.todolistId
 
     tasksApi
-      .changeTaskStatus({
-        todolistId: task.todolistId,
-        taskId: task.id,
-        model,
-      })
+      .changeTaskStatus({ todolistId, taskId: task.id, model })
       .then((res) => {
         setTasks({
-          ...task,
-          [tosolistId]: tasks[tosolistId].map((el) =>
+          ...tasks,
+          [todolistId]: tasks[todolistId].map((el) =>
             el.id === task.id ? res.data.data.item : el,
           ),
         })
